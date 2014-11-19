@@ -32,7 +32,7 @@ CREATE TABLE `comments` (
   `Comment_Text` varchar(1024) NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `idComments_UNIQUE` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +62,7 @@ CREATE TABLE `question` (
   `Number_Right_Votes` int(11) NOT NULL,
   `Due_Date` datetime NOT NULL,
   `TimeStamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `OpenClosed` enum('Open','Closed') NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `idQuestion_UNIQUE` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -144,4 +145,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-11-13 13:31:07
+-- Dump completed on 2014-11-18 12:53:51

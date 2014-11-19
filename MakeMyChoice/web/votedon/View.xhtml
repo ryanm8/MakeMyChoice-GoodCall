@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VotedonViewDlg" widgetVar="VotedonViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewVotedonTitle}">
+            <h:form id="VotedonViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{votedonController.selected != null}">
+                        <h:outputText value="#{bundle.ViewVotedonLabel_id}"/>
+                        <h:outputText value="#{votedonController.selected.id}" title="#{bundle.ViewVotedonTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewVotedonLabel_userID}"/>
+                        <h:outputText value="#{votedonController.selected.userID}" title="#{bundle.ViewVotedonTitle_userID}"/>
+                        <h:outputText value="#{bundle.ViewVotedonLabel_questionID}"/>
+                        <h:outputText value="#{votedonController.selected.questionID}" title="#{bundle.ViewVotedonTitle_questionID}"/>
+                        <h:outputText value="#{bundle.ViewVotedonLabel_leftRight}"/>
+                        <h:outputText value="#{votedonController.selected.leftRight}" title="#{bundle.ViewVotedonTitle_leftRight}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VotedonViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

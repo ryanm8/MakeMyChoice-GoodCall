@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="QuestionCreateDlg" widgetVar="QuestionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateQuestionTitle}">
+            <h:form id="QuestionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{questionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{questionController.selected.id}" title="#{bundle.CreateQuestionTitle_id}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_title}" for="title" />
+                        <p:inputText id="title" value="#{questionController.selected.title}" title="#{bundle.CreateQuestionTitle_title}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_title}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_description}" for="description" />
+                        <p:inputText id="description" value="#{questionController.selected.description}" title="#{bundle.CreateQuestionTitle_description}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_description}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_askerID}" for="askerID" />
+                        <p:inputText id="askerID" value="#{questionController.selected.askerID}" title="#{bundle.CreateQuestionTitle_askerID}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_askerID}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_leftOptionDescription}" for="leftOptionDescription" />
+                        <p:inputText id="leftOptionDescription" value="#{questionController.selected.leftOptionDescription}" title="#{bundle.CreateQuestionTitle_leftOptionDescription}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_leftOptionDescription}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_rightOptionDescription}" for="rightOptionDescription" />
+                        <p:inputText id="rightOptionDescription" value="#{questionController.selected.rightOptionDescription}" title="#{bundle.CreateQuestionTitle_rightOptionDescription}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_rightOptionDescription}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_numberLeftVotes}" for="numberLeftVotes" />
+                        <p:inputText id="numberLeftVotes" value="#{questionController.selected.numberLeftVotes}" title="#{bundle.CreateQuestionTitle_numberLeftVotes}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_numberLeftVotes}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_numberRightVotes}" for="numberRightVotes" />
+                        <p:inputText id="numberRightVotes" value="#{questionController.selected.numberRightVotes}" title="#{bundle.CreateQuestionTitle_numberRightVotes}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_numberRightVotes}"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_dueDate}" for="dueDate" />
+                        <p:calendar id="dueDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{questionController.selected.dueDate}" title="#{bundle.EditQuestionTitle_dueDate}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_dueDate}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_timeStamp}" for="timeStamp" />
+                        <p:calendar id="timeStamp" pattern="MM/dd/yyyy HH:mm:ss" value="#{questionController.selected.timeStamp}" title="#{bundle.EditQuestionTitle_timeStamp}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_timeStamp}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateQuestionLabel_openClosed}" for="openClosed" />
+                        <p:inputText id="openClosed" value="#{questionController.selected.openClosed}" title="#{bundle.CreateQuestionTitle_openClosed}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_openClosed}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{questionController.create}" value="#{bundle.Save}" update="display,:QuestionListForm:datalist,:growl" oncomplete="handleSubmit(args,'QuestionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="QuestionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
