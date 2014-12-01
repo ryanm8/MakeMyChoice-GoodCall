@@ -1,0 +1,46 @@
+<html 
+    content-type="text/html"
+    page-encoding="UTF-8" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:l="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <!--link rel="shortcut icon" type="image/x-icon" href="request.contextPath}/resources/images/favicon.ico"/-->
+        <title>Login</title>
+    </h:head>
+    <ui:composition template="/loginTemplate.xhtml">
+        <ui:define name="body">
+            <f:view>
+                <h1 style="margin-left:20px;"><h:outputText value="Welcome! Please Log in Below:" /></h1>
+                <h:messages style="color: red"
+                            showDetail="true"/>
+                <h:form id="login" style="margin-left:20px;">
+                    <h:panelGrid columns="1" border="0">
+                        <h:outputStylesheet library="css" name="accountManagement.css"></h:outputStylesheet>
+                        <h2 class="loginLabel">PID:</h2><h:inputText styleClass="loginField" id="username" 
+                                          value="#{usermanager.username}"/>        
+                        <h2 class="loginLabel">Password: </h2><h:inputSecret styleClass="loginField" id="password"
+                                                 value="#{usermanager.password}"/>
+                    </h:panelGrid>
+                    <h:commandButton id="submit" 
+                                     type="submit"
+                                     value="Login"
+                                     action="#{usermanager.validateUser}"
+                                     style="width:200px;margin-left:3px;"
+                                     />
+                    <br />
+                    <h1><h:outputText value="Don't have an account? Create one below:" /></h1>
+                    <h:commandLink id="create"
+                                   value="Create New Account"
+                                   action="create"
+                                   />
+                </h:form>
+
+            </f:view>
+
+        </ui:define>
+    </ui:composition>
+</html>  

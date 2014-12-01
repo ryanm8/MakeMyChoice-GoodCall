@@ -8,11 +8,16 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,18 +27,45 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Brian
  */
+@SqlResultSetMapping(
+  name="user-map",
+  entities={
+    @EntityResult(
+      entityClass=User.class,
+      fields={
+        @FieldResult(name="ID", column="ID"),
+        @FieldResult(name="Email", column="Email"),
+        @FieldResult(name="PID", column="PID"),
+        @FieldResult(name="Password", column="Password"),
+        @FieldResult(name="First_Name", column="First_Name"),
+        @FieldResult(name="Last_Name", column="Last_Name"),
+        @FieldResult(name="Cell_Number", column="Cell_Number")
+  }) }
+)
+
 @Entity
 @Table(name = "user")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
-    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
-    @NamedQuery(name = "User.findByCellNumber", query = "SELECT u FROM User u WHERE u.cellNumber = :cellNumber"),
-    @NamedQuery(name = "User.findByPid", query = "SELECT u FROM User u WHERE u.pid = :pid"),
-    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "user.findAll", query = "SELECT * FROM user", resultSetMapping="user-map"),
+    //@NamedNativeQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedNativeQuery(name = "user.findByPid", query = "SELECT * FROM user u WHERE u.PID = ?", resultSetMapping="user-map"),
+    //@NamedNativeQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    //@NamedNativeQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
+    //@NamedNativeQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+    /*@NamedNativeQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")*/})
+//@Entity
+//@Table(name = "user")
+//@XmlRootElement
+//@NamedQueries({
+//    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+//    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+//    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+//    @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+//    @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
+//    @NamedQuery(name = "User.findByCellNumber", query = "SELECT u FROM User u WHERE u.cellNumber = :cellNumber"),
+//    @NamedQuery(name = "User.findByPid", query = "SELECT u FROM User u WHERE u.pid = :pid"),
+//    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
