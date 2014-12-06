@@ -34,20 +34,22 @@ public class TextMsgSender {
     @PersistenceContext 
     private EntityManager em;
 
-    @Schedule(dayOfWeek = "*", month = "*", hour = "23", dayOfMonth = "*", year = "*", minute = "45", second = "0", persistent = false)
+    @Schedule(dayOfWeek = "*", month = "*", hour = "17", dayOfMonth = "*", year = "*", minute = "28", second = "0", persistent = false)
     
     public void myTimer() {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate1 = df1.format(new Date());
-        //System.out.println("Timer event: " + new Date());
         List<Question> questionList = (List<Question>) em.
                 createNamedQuery("Question.natfindByDueDate").setParameter(1, 
                 formattedDate1 + " 00:00:00").getResultList();
-        //sendText(null, null);
+        for(Question q : questionList)
+        {
+            System.out.println("Sending Text");
+            User user = (User) em.createNamedQuery("user.findById").setParameter(1, q.getAskerID()).getSingleResult();
+            sendText(user, q);
+            System.out.println("Text Sent");
+        }
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     public void sendText(User poster, Question answer) {
     
@@ -56,11 +58,36 @@ public class TextMsgSender {
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("user", "MakeMyChoice");
         params.put("pass", "monkeymonkey123");
-        params.put("phonenumber", "5406218866");
-        params.put("subject","Subject");
-        params.put("message", "IT WORKS WOOT");
+        params.put("phonenumber", poster.getCellNumber());
+        params.put("subject","MMC");
+        String message = "";
+        if(answer.getNumberLeftVotes() > answer.getNumberRightVotes())
+        {
+            // Left > Right
+            message = "Hi! \"" + 
+                    answer.getTitle() + "\" has been answered." +
+                    " Your results are " + answer.getNumberLeftVotes() + "-" + answer.getNumberRightVotes() +
+                    ". In favor of the Left Option.";
+        }
+        else if (answer.getNumberLeftVotes() < answer.getNumberRightVotes())
+        {
+            // Left < Right
+            message = "Hi! \"" + 
+                    answer.getTitle() + "\" has been answered." +
+                    " Your results are " + answer.getNumberLeftVotes() + "-" + answer.getNumberRightVotes() +
+                    ". In favor of the Right Option.";
+        }
+        else
+        {
+            // Left = Right
+            message = "Hi! \"" + 
+                    answer.getTitle() + "\" has been answered." +
+                    " Your results are " + answer.getNumberLeftVotes() + "-" + answer.getNumberRightVotes() +
+                    ". A tie.";
+        }
+        params.put("message", message);
         params.put("express","1");
-
+     
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String,Object> param : params.entrySet()) {
             if (postData.length() != 0) postData.append('&');

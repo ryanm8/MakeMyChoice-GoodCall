@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedNativeQueries({
     @NamedNativeQuery(name = "user.findAll", query = "SELECT * FROM user", resultSetMapping="user-map"),
-    //@NamedNativeQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedNativeQuery(name = "user.findById", query = "SELECT * FROM User u WHERE u.id = ?", resultSetMapping="user-map"),
     @NamedNativeQuery(name = "user.findByPid", query = "SELECT * FROM user u WHERE u.PID = ?", resultSetMapping="user-map"),
     //@NamedNativeQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     //@NamedNativeQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
