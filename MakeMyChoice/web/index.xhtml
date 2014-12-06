@@ -1,7 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
@@ -19,7 +22,21 @@
         <br />
         <h:link outcome="/votedon/List" value="Show All Votedon Items"/>
     </h:body>
-
+<h:form id="form">           
+    <p:growl id="msgs" showDetail="true" />
+    <p:accordionPanel multiple="true" value="#{questionController.items}" var="q">
+        <p:tab title="#{q.title}">
+            <h:panelGrid columns="3" cellpadding="10">
+                <p:graphicImage name="/images/Harry_Callahan.png" />
+                <h:outputText value="#{q.description}" />
+                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                <h:outputText value="   " />
+                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+            </h:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
+    </h:form>
 
 
 

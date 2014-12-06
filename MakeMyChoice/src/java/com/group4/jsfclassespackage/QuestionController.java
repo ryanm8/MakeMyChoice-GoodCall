@@ -55,6 +55,10 @@ public class QuestionController implements Serializable {
         return selected;
     }
 
+    public String navigateWithSelection(String id) {
+        return "question.xhtml?faces-redirect=true&" + "qid=" + id;
+    }
+    
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
         if (!JsfUtil.isValidationFailed()) {
