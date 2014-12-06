@@ -9,11 +9,16 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,6 +30,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author Brian
  */
+@SqlResultSetMapping(
+  name="question-map",
+  entities={
+    @EntityResult(
+      entityClass=Question.class,
+      fields={
+        @FieldResult(name="ID", column="ID"),
+        @FieldResult(name="Title", column="Title"),
+        @FieldResult(name="Description", column="Description"),
+        @FieldResult(name="Asker_ID", column="Asker_ID"),
+        @FieldResult(name="Left_Option_Description", column="Left_Option_Description"),
+        @FieldResult(name="Right_Option_Description", column="Right_Option_Description"),
+        @FieldResult(name="Number_Left_Votes", column="Number_Left_Votes"),
+        @FieldResult(name="Number_Right_Votes", column="Number_Right_Votes"),
+        @FieldResult(name="Due_Date", column="Due_Date"),
+        @FieldResult(name="Timestamp", column="Timestamp"),
+        @FieldResult(name="OpenClosed", column="OpenClosed"),
+  }) }
+)
+
 @Entity
 @Table(name = "question")
 @XmlRootElement
@@ -41,6 +66,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Question.findByDueDate", query = "SELECT q FROM Question q WHERE q.dueDate = :dueDate"),
     @NamedQuery(name = "Question.findByTimeStamp", query = "SELECT q FROM Question q WHERE q.timeStamp = :timeStamp"),
     @NamedQuery(name = "Question.findByOpenClosed", query = "SELECT q FROM Question q WHERE q.openClosed = :openClosed")})
+
+@NamedNativeQueries({
+//    @NamedNativeQuery(name = "Question.natfindAll", query = "SELECT * FROM question q", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindById", query = "SELECT * FROM question q WHERE q.id = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByTitle", query = "SELECT * FROM question q WHERE q.title = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByDescription", query = "SELECT * FROM question q WHERE q.description = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByAskerID", query = "SELECT * FROM question q WHERE q.askerID = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByLeftOptionDescription", query = "SELECT * FROM question q WHERE q.leftOptionDescription = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByRightOptionDescription", query = "SELECT * FROM question q WHERE q.rightOptionDescription = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByNumberLeftVotes", query = "SELECT * FROM question q WHERE q.numberLeftVotes = ?", resultSetMapping = "question-map"),
+//    @NamedNativeQuery(name = "Question.natfindByNumberRightVotes", query = "SELECT * FROM question q WHERE q.numberRightVotes = ?", resultSetMapping = "question-map"),
+    @NamedNativeQuery(name = "Question.natfindByDueDate", query = "SELECT * FROM question q WHERE q.due_Date = ?", resultSetMapping = "question-map"),
+    @NamedNativeQuery(name = "Question.natfindByTimeStamp", query = "SELECT * FROM question q WHERE q.timeStamp = ?", resultSetMapping = "question-map"),
+    @NamedNativeQuery(name = "Question.natfindByOpenClosed", query = "SELECT * FROM question q WHERE q.openClosed = ?", resultSetMapping = "question-map")})
+
 public class Question implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

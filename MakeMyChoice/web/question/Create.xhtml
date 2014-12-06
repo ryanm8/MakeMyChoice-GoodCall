@@ -29,7 +29,7 @@
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_numberRightVotes}" for="numberRightVotes" />
                         <p:inputText id="numberRightVotes" value="#{questionController.selected.numberRightVotes}" title="#{bundle.CreateQuestionTitle_numberRightVotes}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_numberRightVotes}"/>
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_dueDate}" for="dueDate" />
-                        <p:calendar id="dueDate" pattern="MM/dd/yyyy HH:mm:ss" value="#{questionController.selected.dueDate}" title="#{bundle.EditQuestionTitle_dueDate}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_dueDate}" showOn="button"/>
+                        <p:calendar id="dueDate" pattern="MM/dd/yyyy" value="#{questionController.selected.dueDate}" title="#{bundle.EditQuestionTitle_dueDate}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_dueDate}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_timeStamp}" for="timeStamp" />
                         <p:calendar id="timeStamp" pattern="MM/dd/yyyy HH:mm:ss" value="#{questionController.selected.timeStamp}" title="#{bundle.EditQuestionTitle_timeStamp}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_timeStamp}" showOn="button"/>
                         <p:outputLabel value="#{bundle.CreateQuestionLabel_openClosed}" for="openClosed" />
