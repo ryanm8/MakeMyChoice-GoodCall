@@ -1,0 +1,55 @@
+<html 
+    content-type="text/html"
+    page-encoding="UTF-8" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:l="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Post A Question</title>
+    </h:head>
+    <ui:composition template="/postQuestionTemplate.xhtml">
+        <ui:define name="body">
+            <f:view>
+                <h1 style="margin-left:20px;"><h:outputText value="Enter your question below to post!" /></h1>
+                <h:form id="create" style="margin-left:20px;">
+                    <p:messages id="msgs"/>
+                    <h:panelGrid columns="4" border="0" cellpadding="5">
+                        <h2>Question Title</h2>
+                            <p:inputTextarea  rows="2" cols="60" counter="display" maxlength="45" counterTemplate="{0} characters remaining." 
+                                              id="title" value="#{questionController.selected.title}" required="true" 
+                                              requiredMessage="#{bundle.CreateQuestionRequiredMessage_title}"/>
+                            <h:outputText id="display" />
+                            <p:message for="title" display="icon"/>
+                        <h2>Description</h2>
+                            <p:inputTextarea  rows="2" cols="60" counter="display1" maxlength="1024" counterTemplate="{0} characters remaining." 
+                                              id="description" value="#{questionController.selected.description}" required="true" 
+                                              requiredMessage="#{bundle.CreateQuestionRequiredMessage_description}"/>
+                            <h:outputText id="display1" />
+                            <p:message for="description" display="icon"/>
+                        <h2>Left Choice</h2>
+                            <p:inputTextarea  rows="2" cols="60" counter="display2" maxlength="256" counterTemplate="{0} characters remaining." 
+                                              id="leftOptionDescription" value="#{questionController.selected.leftOptionDescription}" required="true" 
+                                              requiredMessage="#{bundle.CreateQuestionRequiredMessage_leftOptionDescription}"/>
+                            <h:outputText id="display2" />
+                            <p:message for="leftOptionDescription" display="icon"/>
+                        <h2>Right Choice</h2>
+                            <p:inputTextarea  rows="2" cols="60" counter="display3" maxlength="256" counterTemplate="{0} characters remaining." 
+                                              id="rightOptionDescription" value="#{questionController.selected.rightOptionDescription}" required="true" 
+                                              requiredMessage="#{bundle.CreateQuestionRequiredMessage_rightOptionDescription}"/>
+                            <h:outputText id="display3" />
+                            <p:message for="rightOptionDescription" display="icon"/>
+                        <h2>Due Date</h2>
+                            <p:calendar id="dueDate" pattern="MM/dd/yyyy" value="#{questionController.selected.dueDate}" required="true" 
+                                        requiredMessage="#{bundle.EditQuestionRequiredMessage_dueDate}" showOn="button"/>
+                            <p:message for="dueDate" display="icon"/>
+                    </h:panelGrid>
+                    <br />
+                    <p:commandButton value="Post" actionListener="#{questionController.create}" update="create" style="width:100px; margin-left:3px;"/>
+                </h:form>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>
