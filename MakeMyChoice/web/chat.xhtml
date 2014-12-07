@@ -9,7 +9,7 @@ Copyright © 2014 Chris Hoffman. All rights reserved.
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    <body>
+    <body onload="join('#{user.pid}');">
         <form action="">
  <table>
  <tr>
@@ -25,10 +25,10 @@ Copyright © 2014 Chris Hoffman. All rights reserved.
  <tr>
  <td colspan="2">
  <input id="textField" name="name" value="Duke" type="text"/>
- <input onclick="join();" value="Join" type="button"/>
+ <!--input onclick="join('{user.pid}');" value="Join" type="button"/-->
  <input onclick="send_message();" value="Send" type="button"/><p/>
- <input onclick="disconnect();" value="Disconnect"
-type="button"/>
+ <!--input onclick="disconnect();" value="Disconnect"
+type="button"/-->
  </td>
  </tr>
  </table>

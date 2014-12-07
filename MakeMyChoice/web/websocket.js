@@ -17,18 +17,18 @@ websocket.onmessage = function(evt) { onMessage(evt); };
 websocket.onerror = function(evt) { onError(evt); };
 websocket.onclose = function(evt) { onClose(evt); };
 var output = document.getElementById("output");
-function join() {
- username = textField.value;
+function join(name) {
+ username = name;
  websocket.send(username + " joined");
 }
 function send_message() {
  websocket.send(username + ": " + textField.value);
  }
 function onOpen() {
- writeToScreen("CONNECTED");
+ //writeToScreen("CONNECTED");
 }
 function onClose() {
- writeToScreen("DISCONNECTED");
+ //writeToScreen("DISCONNECTED");
 }
 function onMessage(evt) {
  writeToScreen("RECEIVED: " + evt.data);
