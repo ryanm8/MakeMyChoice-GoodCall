@@ -14,12 +14,8 @@ Copyright © 2014 Ryan Miller. All rights reserved.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <ui:param id='id' name='id' value='' />
-        <script>
-            var qid = location.search.split('qid=')[1];
-            document.getElementById("id").setAttribute("value", qid);
-        </script>
-        <h:outputText value="#{id}"/>
+        
+        <h:outputText value="#{param.qid}"/>
         <div></div>
     </body>
 </html>
