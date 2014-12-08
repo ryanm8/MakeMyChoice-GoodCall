@@ -78,7 +78,7 @@ public class AuthenticationPhaseListener implements PhaseListener {
             if(context.getExternalContext().getRequestPathInfo().equals("/login.xhtml"))
             {
                 try {
-                    context.getExternalContext().redirect("welcome.xhtml");
+                    context.getExternalContext().redirect("index.xhtml");
                 } catch (IOException ex) {
                     Logger.getLogger(AuthenticationPhaseListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
