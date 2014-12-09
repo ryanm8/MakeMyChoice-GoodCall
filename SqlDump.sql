@@ -127,7 +127,7 @@ CREATE TABLE `votedon` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `votedonvotedon`
+-- Dumping data for table `votedon`
 --
 
 LOCK TABLES `votedon` WRITE;
@@ -148,13 +148,9 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
 	
 	
 
 
 -- Dump completed on 2014-11-18 12:53:51
 
-=======
--- Dump completed on 2014-12-07 23:37:01
->>>>>>> 2702dd2b372ed0d3e833adaed56079df6ed75698
