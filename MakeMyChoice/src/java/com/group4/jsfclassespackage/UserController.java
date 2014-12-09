@@ -136,6 +136,17 @@ public class UserController implements Serializable {
         return picture;
                 
     }
+        
+        /**
+     * Returns list of group Assignments for given AssigneeId
+     * @param assigneeId The id for the assignee
+     * @return List of Assignments
+     */
+    public String getPIDByID(int assigneeId) {
+        List<User> items = getFacade().findByQueryOneParam("SELECT a FROM User a WHERE a.id LIKE :ID", "ID", assigneeId);
+        String pid = items.get(0).getPid();
+        return pid;
+    }
 
     @FacesConverter(forClass = User.class)
     public static class UserControllerConverter implements Converter {

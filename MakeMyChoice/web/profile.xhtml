@@ -62,52 +62,26 @@ Copyright © 2014 Brian Green. All rights reserved.
                     <p:graphicImage id="myPhoto" name="images/#{photoCamView.filename}.png" />
                 </h:panelGrid>
             </h:form>
-            <h:form id="QuestionListForm" styleClass="panelGridCenter">
-                <p:panel header="My Questions">
-                    <p:dataTable id="datalist" value="#{questionController.getItemsByOwner(user.id)}" var="item"
-                                 selectionMode="single" selection="#{questionsController.selected}"
-                                 paginator="true"
-                                 rowKey="#{item.id}"
-                                 rows="10"
-                                 rowsPerPageTemplate="10,20,30,40,50"
-                                 >
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Title"/>
-                            </f:facet>
-                            <h:outputText value="#{item.title}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Left Votes"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numberLeftVotes}">
+            <h:form> 
+                <p:dataScroller value="#{questionController.getItemsByOwner(user.id)}" var="q" chunkSize="10" mode="basic" scrollHeight="500">
+                    <f:facet name="header">
+                        My Questions: 
+                    </f:facet>
 
-                            </h:outputText>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Right Votes"/>
-                            </f:facet>
-                            <h:outputText value="#{item.numberRightVotes}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Open?"/>
-                            </f:facet>
-                            <h:outputText value="#{item.openClosed}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Due Date"/>
-                            </f:facet>
-                            <h:outputText value="#{item.dueDate}">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
-                            </h:outputText>
-                        </p:column>
+                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                        <p:graphicImage name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
 
-                    </p:dataTable>
-                </p:panel>
+                        <p:outputPanel>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <h:outputText value="#{q.title}" />
+                                <h:outputText value="#{q.description}" />
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+                </p:dataScroller>
             </h:form>
 
         </ui:define>
