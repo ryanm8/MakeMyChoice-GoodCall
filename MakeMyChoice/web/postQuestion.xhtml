@@ -16,7 +16,7 @@
                 <h1 style="margin-left:20px;"><h:outputText value="Enter your question below to post!" /></h1>
                 <h:form id="create" style="margin-left:20px;">
                     <p:messages id="msgs"/>
-                    <h:panelGrid columns="4" border="0" cellpadding="5">
+                    <h:panelGrid columns="4" border="0" cellpadding="5" >
                         <h2>Question Title</h2>
                             <p:inputTextarea  rows="2" cols="60" counter="display" maxlength="45" counterTemplate="{0} characters remaining." 
                                               id="title" value="#{questionController.selected.title}" required="true" 
@@ -47,7 +47,7 @@
                             <p:message for="dueDate" display="icon"/>
                     </h:panelGrid>
                     <br />
-                    <p:commandButton value="Post" actionListener="#{questionController.create}" update="create" style="width:100px; margin-left:3px;"/>
+                    <p:commandButton value="Post" actionListener="#{questionController.createQuestion(user.id)}" update="create" style="width:100px; margin-left:3px;"/>
                 </h:form>
             </f:view>
         </ui:define>

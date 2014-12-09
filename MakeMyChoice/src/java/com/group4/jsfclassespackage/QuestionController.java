@@ -18,6 +18,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import java.util.Date;
 
 
 
@@ -61,7 +62,15 @@ public class QuestionController implements Serializable {
     public String navigateWithSelection(String id) {
         return "question.xhtml?faces-redirect=true&" + "qid=" + id;
     }
-    
+    public void createQuestion(int userID) {
+        selected.setId(0);
+        selected.setOpenClosed("Open");
+        selected.setAskerID(userID);
+        selected.setTimeStamp(new Date());
+        selected.setNumberLeftVotes(0);
+        selected.setNumberRightVotes(0);
+        create();
+    }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
         if (!JsfUtil.isValidationFailed()) {
