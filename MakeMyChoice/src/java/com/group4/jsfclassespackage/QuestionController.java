@@ -197,6 +197,26 @@ public class QuestionController implements Serializable {
     public List<Question> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+    /**
+     * Returns list of group Assignments for given AssigneeId
+     * @param assigneeId The id for the assignee
+     * @return List of Assignments
+     */
+    public List<Question> getItemsByOwner(int assigneeId) {
+        items = getFacade().findByQueryOneParam("SELECT a FROM Question a WHERE a.askerID LIKE :ID", "ID", assigneeId);
+        return items;
+    }
+    
+    /**
+     * Returns list of group Assignments for given AssigneeId
+     * @param assigneeId The id for the assignee
+     * @return List of Assignments
+     */
+    public List<Question> getallItems() {
+        items = getFacade().findByQueryNoParam("SELECT a FROM Question a ORDER BY a.timeStamp DESC");
+        return items;
+    }
+    
 
     @FacesConverter(forClass = Question.class)
     public static class QuestionControllerConverter implements Converter {

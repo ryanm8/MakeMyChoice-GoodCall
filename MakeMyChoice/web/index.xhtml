@@ -6,41 +6,68 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Home</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
-    <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
-        <br />
-        <h:link outcome="/comments/List" value="Show All Comments Items"/>
-        <br />
-        <h:link outcome="/question/List" value="Show All Question Items"/>
-        <br />
-        <h:link outcome="/user/List" value="Show All User Items"/>
-        <br />
-        <h:link outcome="/votedon/List" value="Show All Votedon Items"/>
-        <br />
-        <h:link outcome="postQuestion.xhtml" value="Post A Question"/>
-    </h:body>
-<h:form id="form">           
-    <p:growl id="msgs" showDetail="true" />
-    <p:accordionPanel multiple="true" value="#{questionController.items}" var="q">
-        <p:tab title="#{q.title}">
-            <h:panelGrid columns="3" cellpadding="10">
-                <p:graphicImage name="/images/Harry_Callahan.png" />
-                <h:outputText value="#{q.description}" />
-                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                <h:outputText value="   " />
-                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
-                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
-            </h:panelGrid>
-        </p:tab>
-    </p:accordionPanel>
-    </h:form>
+    <ui:composition template="/postQuestionTemplate.xhtml">
+        <ui:define name="body">
+            <!--
+            <h:form id="form">           
+                <p:growl id="msgs" showDetail="true" />
+                <p:accordionPanel multiple="true" value="#{questionController.getallItems()}" var="q">
+                    <p:tab title="#{q.title}">
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <p:graphicImage name="/images/Harry_Callahan.png" />
+                            <h:outputText value="#{q.description}" />
+                            <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                            <h:outputText value="   " />
+                            <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                            <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </h:form>
+            //-->
+            <h:form> 
+                <p:dataScroller value="#{questionController.getallItems()}" var="q" chunkSize="10" mode="inline" scrollHeight="500">
+                <f:facet name="header">
+                    Scroll Down to Load More Questions
+                </f:facet>
+ 
+               <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <p:graphicImage name="/images/Harry_Callahan.png" /> 
+ 
+                   <p:outputPanel>
+                <h:panelGrid columns="3" cellpadding="5">
+                    <h:outputText value="#{q.title}" />
+                    <h:outputText value="#{q.description}" />
+                    <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                    <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                    <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                </h:panelGrid>
+            </p:outputPanel>
+        </h:panelGrid>
+    </p:dataScroller>
+</h:form>
 
-
-
+            <h:body>
+                Hello from Facelets
+                <br />
+                <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+                <br />
+                <h:link outcome="/comments/List" value="Show All Comments Items"/>
+                <br />
+                <h:link outcome="/question/List" value="Show All Question Items"/>
+                <br />
+                <h:link outcome="/user/List" value="Show All User Items"/>
+                <br />
+                <h:link outcome="/votedon/List" value="Show All Votedon Items"/>
+                <br />
+                <h:link outcome="postQuestion.xhtml" value="Post A Question"/>
+                <br />
+                <h:link outcome="profile.xhtml" value="Profile Page"/>
+            </h:body>
+        </ui:define>
+    </ui:composition>
 </html>
 

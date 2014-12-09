@@ -186,6 +186,7 @@ public class UserManager {
         setPassword(user.getPassword());
         setPasswordv(user.getPassword());
         setCurrentPassword(user.getPassword());   
+        setCell(user.getCellNumber());
     }
     
     /**

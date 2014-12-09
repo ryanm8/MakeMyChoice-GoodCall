@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Created by Brian Green on 2014.12.07 
+Copyright © 2014 Brian Green. All rights reserved.
+-->
+<!DOCTYPE html>
+<html 
+    content-type="text/html"
+    page-encoding="UTF-8" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:l="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>My Profile</title>
+    </h:head>
+    <style>
+        .panelGridCenter 
+        {
+            margin: 0 auto;
+        }
+    </style>
+    <ui:composition template="/postQuestionTemplate.xhtml">
+        <ui:define name="body">
+            <ui:include src="UserEdit.xhtml"/>
+
+            <h1 align="left">
+                <h:outputText value="My Profile"  />
+            </h1>
+
+            <h:panelGrid columns="2" cellpadding="10" >
+                <f:facet name="header">
+                    <p:graphicImage name="images/${userController.getProfilePic(user.pid)}.png" id="myPhoto" />
+                </f:facet>
+
+                <h:outputText value="Name: " />
+                <h:outputText value="#{user.firstName} #{user.lastName}" />
+
+                <h:outputText value="Username: " />
+                <h:outputText value="#{user.pid}" />
+
+                <h:outputText value="Email: " />
+                <h:outputText value="#{user.email}" />
+
+                <h:outputText value="Phone : " />
+                <h:outputText value="#{user.cellNumber}" />
+
+
+                <h:outputText value="Edit: " />
+                <h:form>
+                    <p:commandButton id="editUserButton"   icon="ui-icon-pencil" value="Edit User Settings" update=":UserEditForm" oncomplete="PF('UserEditDialog').show()"  action="#{usermanager.populate(user)}" disabled="false"/>
+                </h:form>
+
+            </h:panelGrid>       
+
+            <h:form>        
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:photoCam widgetVar="pc" listener="#{photoCamView.oncapture}" update="myPhoto"/>
+                    <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
+                    <p:graphicImage id="myPhoto" name="images/#{photoCamView.filename}.png" />
+                </h:panelGrid>
+            </h:form>
+            <h:form id="QuestionListForm" styleClass="panelGridCenter">
+                <p:panel header="My Questions">
+                    <p:dataTable id="datalist" value="#{questionController.getItemsByOwner(user.id)}" var="item"
+                                 selectionMode="single" selection="#{questionsController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.id}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Title"/>
+                            </f:facet>
+                            <h:outputText value="#{item.title}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Left Votes"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numberLeftVotes}">
+
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Right Votes"/>
+                            </f:facet>
+                            <h:outputText value="#{item.numberRightVotes}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Open?"/>
+                            </f:facet>
+                            <h:outputText value="#{item.openClosed}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Due Date"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dueDate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+
+</html>

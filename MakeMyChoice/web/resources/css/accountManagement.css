@@ -34,3 +34,6 @@ Copyright © 2014 Koorosh Massoudi. All rights reserved.
     font-size: 1.5em!important;
     color: #333333;
 }
+.panelGridCenter {
+    margin: 0 auto;
+}

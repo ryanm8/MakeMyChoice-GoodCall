@@ -48,9 +48,22 @@ public abstract class AbstractFacade<T> {
     public List<T> findByQueryOneParam(String query, String varName, Object varValue) {
         return getEntityManager().createQuery(query).setParameter(varName, varValue).getResultList();
     }
-    
+
     public List<T> findByQueryTwoParams(String query, String varName1, Object varValue1, String varName2, Object varValue2) {
         return getEntityManager().createQuery(query).setParameter(varName1, varValue1).setParameter(varName2, varValue2).getResultList();
+    }
+
+        /**
+     * Executes an arbitrary query to the table associated with the Facade.
+     * Replaces one variable in the query with the given value.
+     * 
+     * @param query String representing the desired db query
+     * @param varName The name of the variable to be replaced in the query
+     * @param varValue The value with which to replace the variable
+     * @return The list of values returned by the db query
+     */
+    public List<T> findByQueryNoParam(String query) {
+        return getEntityManager().createQuery(query).getResultList();
     }
 
     public List<T> findAll() {

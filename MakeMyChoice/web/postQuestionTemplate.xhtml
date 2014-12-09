@@ -17,13 +17,16 @@
                 <p:layoutUnit position="north" size="130">
                     <div id="topLogo">
                         <h:link outcome="index.xhtml">
-                            <p:graphicImage url="#{resource['images:plannerLogo.png']}" width="100%" height="80" alt="Planner Logo"></p:graphicImage>
+                            <p:graphicImage url="#{resource['images:makemychoicelogo.gif']}"  height="80" alt="Planner Logo"></p:graphicImage>
                         </h:link>
                     </div>
-                    <h:form id="menuForm" >
+                    <h:form id="menuForm" styleClass="menuBar">
                         <p:menubar style="background-color:#FEF07C;">
                             <p:menuitem value="#{bundle.Home}" outcome="index.xhtml" icon="ui-icon-home"/>
-                            <p:menuitem value="Logout" outcome="/login.xhtml" icon="ui-icon-key"/>
+                            <p:menuitem value="My Profile" outcome="/profile.xhtml" icon="ui-icon-key"/>
+                            <p:menuitem value="Ask A Question" outcome="/postQuestion.xhtml" icon="ui-icon-key"/>
+                            <p:menuitem action="#{usermanager.logout}" value="Logout"  icon="ui-icon-key"/>
+                            
                         </p:menubar>
                     </h:form>
                 </p:layoutUnit>

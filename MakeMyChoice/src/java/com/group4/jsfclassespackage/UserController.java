@@ -4,6 +4,7 @@ import com.group4.entitypackage.User;
 import com.group4.jsfclassespackage.util.JsfUtil;
 import com.group4.jsfclassespackage.util.JsfUtil.PersistAction;
 import com.group4.sessionbeanpackage.UserFacade;
+import java.io.File;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,6 +19,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.ServletContext;
 
 @Named("userController")
 @SessionScoped
@@ -119,6 +121,20 @@ public class UserController implements Serializable {
 
     public List<User> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+        public String getProfilePic(String userPID)
+    {
+        String picture = "profilePic";
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        String newFileName = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "images" + File.separator + userPID + ".png";
+        File f = new File(newFileName);
+        if(f.exists() && !f.isDirectory()) 
+        {
+            return userPID;
+        }
+        return picture;
+                
     }
 
     @FacesConverter(forClass = User.class)
