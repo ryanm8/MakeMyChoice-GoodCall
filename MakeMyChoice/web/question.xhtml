@@ -9,13 +9,42 @@ Copyright © 2014 Ryan Miller. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <head>
+    <ui:define name="head">
         <title></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        
-        <h:outputText value="#{param.qid}"/>
-        <div></div>
-    </body>
+    </ui:define>
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+                    <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getQuestionById(param.qid).title}" /></h1>
+                    <h2 style="margin-left:40px;"><h:outputText value="#{questionController.getQuestionById(param.qid).description}" /></h2>
+                    <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getStatusString(user.id, param.qid, votedonController)}" style="text-align: center"/></h1>
+                    
+                    <h:panelGrid columns="2" style="width:100%">
+                        <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+
+                                <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes"/>
+
+                                <p:commandButton  disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteLeftOption(user.id, votedonController)}" value="Vote Left">
+                                    <f:param name="id" value="#{param.qid}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel header="#{questionController.getQuestionById(param.qid).rightOptionDescription}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+
+                                <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes"/>
+
+                                <p:commandButton disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteRightOption(user.id, votedonController)}" value="Vote Right">
+                                    <f:param name="id" value="#{param.qid}" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+            <div></div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>

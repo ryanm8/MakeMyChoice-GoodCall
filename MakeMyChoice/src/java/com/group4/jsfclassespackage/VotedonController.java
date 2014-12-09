@@ -61,6 +61,26 @@ public class VotedonController implements Serializable {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
+    
+    public void addVote(int userId, int questionId, String leftRight) {
+        Votedon votedon = new Votedon();
+        votedon.setQuestionID(questionId);
+        votedon.setUserID(userId);
+        votedon.setLeftRight(leftRight);
+        getFacade().create(votedon);
+    }
+    
+    public boolean hasUserVoted(int userId, int questionId) {
+        return !(getFacade().findByQueryTwoParams("SELECT a FROM Votedon a WHERE a.userID LIKE :USERID AND a.questionID LIKE :QUESTIONID", "USERID", userId, "QUESTIONID", questionId)).isEmpty();
+    }
+    
+    public String getStatusString(int userId, int questionId) {
+        if (hasUserVoted(userId, questionId)) {
+            return "You have voted on this question.";
+        } else {
+            return "Choose one of the options below to Vote:";
+        }
+    }
 
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("VotedonUpdated"));

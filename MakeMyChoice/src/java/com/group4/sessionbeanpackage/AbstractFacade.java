@@ -48,6 +48,10 @@ public abstract class AbstractFacade<T> {
     public List<T> findByQueryOneParam(String query, String varName, Object varValue) {
         return getEntityManager().createQuery(query).setParameter(varName, varValue).getResultList();
     }
+    
+    public List<T> findByQueryTwoParams(String query, String varName1, Object varValue1, String varName2, Object varValue2) {
+        return getEntityManager().createQuery(query).setParameter(varName1, varValue1).setParameter(varName2, varValue2).getResultList();
+    }
 
     public List<T> findAll() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();

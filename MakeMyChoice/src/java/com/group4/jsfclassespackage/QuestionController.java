@@ -19,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+
+
 @Named("questionController")
 @SessionScoped
 public class QuestionController implements Serializable {
@@ -27,6 +29,7 @@ public class QuestionController implements Serializable {
     private com.group4.sessionbeanpackage.QuestionFacade ejbFacade;
     private List<Question> items = null;
     private Question selected;
+    
 
     public QuestionController() {
     }
@@ -83,6 +86,76 @@ public class QuestionController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+    public Question getQuestionById(String id) {
+        System.out.println("This is the id: " + id);
+        return getFacade().find(Integer.parseInt(id));
+    }
+    
+    public String voteLeftOption(int userId, VotedonController 
+            votedonController) {
+        String questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("id");
+        if (!votedonController.hasUserVoted(userId, Integer.parseInt(questionId))) {
+            votedonController.addVote(userId, Integer.parseInt(questionId), "Left");
+            Question question = getQuestionById(questionId);
+
+            question.setNumberLeftVotes(question.getNumberLeftVotes() + 1);
+            getFacade().edit(question);
+            return navigateWithSelection(questionId);
+        }
+        return "";
+    }
+    
+     public String voteRightOption(int userId, VotedonController 
+            votedonController) {
+        String questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("id");
+        if (!votedonController.hasUserVoted(userId, Integer.parseInt(questionId))) {
+            votedonController.addVote(userId, Integer.parseInt(questionId), "Right");
+            Question question = getQuestionById(questionId);
+
+            question.setNumberRightVotes(question.getNumberRightVotes() + 1);
+            getFacade().edit(question);
+            return navigateWithSelection(questionId);
+        }
+        return "";
+    }
+     
+    public String getStatusString(int userId, String questionId, 
+            VotedonController votedonController) {
+        if (getQuestionById(questionId).getOpenClosed().equals("Open")) {
+            return votedonController.getStatusString(userId, Integer.parseInt(questionId));
+        }
+        return "This question is now closed.";
+    }
+    
+    public boolean canUserVote(int userId, String questionId, 
+            VotedonController votedonController) {
+        if (getQuestionById(questionId).getOpenClosed().equals("Open")) {
+            return !votedonController.hasUserVoted(userId, Integer.parseInt(questionId));
+        }
+        return false;
+    }
+    
+    public String isVotingDisabled(int userId, 
+            VotedonController votedonController) {
+        System.out.println(FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap());
+        String questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("qid");
+        //I know this looks hacky. It's because PrimeFaces has different
+        //parameter settings at different times depending on if this is the
+        //first time the page is navigated to or not.
+        if (questionId == null) {
+            questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("id");
+        }
+        if (canUserVote(userId, questionId, votedonController)) {
+            return "false";
+        }
+        return "true";
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
