@@ -48,7 +48,7 @@
                             <p:message for="dueDate" display="icon"/>
                     </h:panelGrid>
                     <br />
-                    <p:commandButton value="Post" actionListener="#{questionController.createQuestion(user.id)}" update="create" style="width:100px; margin-left:3px;"/>
+                    <p:commandButton value="Post" actionListener="#{questionController.createQuestion(user.id)}" action="#{questionController.navigateHome()}" update="create" style="width:100px; margin-left:3px;"/>
                 </h:form>
             </f:view>
         </ui:define>

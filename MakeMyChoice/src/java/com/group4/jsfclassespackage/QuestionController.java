@@ -67,6 +67,9 @@ public class QuestionController implements Serializable {
     public String navigateWithSelection(String id) {
         return "question.xhtml?faces-redirect=true&" + "qid=" + id;
     }
+    public String navigateHome()    {
+        return "index.xhtml?faces-redirect=true";
+    }
     public void createQuestion(int userID) {
         selected.setId(0);
         selected.setOpenClosed("Open");
@@ -75,6 +78,7 @@ public class QuestionController implements Serializable {
         selected.setNumberLeftVotes(0);
         selected.setNumberRightVotes(0);
         create();
+
     }
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
