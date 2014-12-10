@@ -18,6 +18,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Named("commentsController")
 @SessionScoped
@@ -27,6 +29,8 @@ public class CommentsController implements Serializable {
     private com.group4.sessionbeanpackage.CommentsFacade ejbFacade;
     private List<Comments> items = null;
     private Comments selected;
+    
+    
 
     public CommentsController() {
     }
@@ -79,6 +83,38 @@ public class CommentsController implements Serializable {
             items = getFacade().findAll();
         }
         return items;
+    }
+    
+    public List<Comments> getById() {
+        String questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("qid");
+        //I know this looks hacky. It's because PrimeFaces has different
+        //parameter settings at different times depending on if this is the
+        //first time the page is navigated to or not.
+        if (questionId == null) {
+            questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("id");
+        }
+        return getFacade().findByQueryOneParam("SELECT a FROM Comments a WHERE a.questionID LIKE :ID ORDER BY a.timeStamp DESC", "ID", Integer.parseInt(questionId));
+    }
+    
+    public String postComment(int userId) {
+        String questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("qid");
+        //I know this looks hacky. It's because PrimeFaces has different
+        //parameter settings at different times depending on if this is the
+        //first time the page is navigated to or not.
+        if (questionId == null) {
+            questionId = FacesContext.getCurrentInstance()
+                .getExternalContext().getRequestParameterMap().get("id");
+        }
+        selected.setId(0);
+        selected.setPosterID(userId);
+        selected.setQuestionID(Integer.parseInt(questionId));
+        selected.setTimeStamp(new Timestamp((new Date()).getTime()));
+        System.out.println("This is the selected thing " + selected.getCommentText() + selected.getTimeStamp());
+        getFacade().create(selected);
+        return "question.xhtml?faces-redirect=true&" + "qid=" + questionId;
     }
 
     private void persist(PersistAction persistAction, String successMessage) {
