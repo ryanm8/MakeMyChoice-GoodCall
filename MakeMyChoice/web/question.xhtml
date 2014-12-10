@@ -26,7 +26,10 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                             <h:panelGrid columns="1" style="width:100%">
 
                                 <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes"/>
-
+                                <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Left')]}" 
+                                                height="80" alt="Checkbox">
+                                    <f:param name="id" value="#{param.qid}" />
+                                </p:graphicImage>
                                 <p:commandButton  disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteLeftOption(user.id, votedonController)}" value="Vote Left">
                                     <f:param name="id" value="#{param.qid}" />
                                 </p:commandButton>
@@ -36,7 +39,10 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                             <h:panelGrid columns="1" style="width:100%">
 
                                 <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes"/>
-
+                                <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Right')]}" 
+                                                height="80" alt="Checkbox">
+                                    <f:param name="id" value="#{param.qid}" />
+                                </p:graphicImage>
                                 <p:commandButton disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteRightOption(user.id, votedonController)}" value="Vote Right">
                                     <f:param name="id" value="#{param.qid}" />
                                 </p:commandButton>
@@ -45,6 +51,29 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                     </h:panelGrid>
             <div></div>
             </h:form>
+            <h:form>           
+               <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="width: 100%" />
+                <h:panelGrid columns="2" style="margin-top: 10px">
+                    <p:commandButton update="commentList" value="Post Comment" action="#{commentsController.postComment(user.id)}"  icon="ui-icon-disk" >
+                        <f:param name="id" value="#{param.qid}" />
+                    </p:commandButton>
+                    <p:commandButton value="Clear" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+                </h:panelGrid>
+                <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+                    <h:outputText id="display" value="#{commentsController.selected.commentText}" escape="false" />
+                </p:dialog>
+            
+               <p:dataScroller id="commentList" value="#{commentsController.getById()}" var="c" chunkSize="50" mode="inline" scrollHeight="500" >
+                <f:param name="id" value="#{param.qid}" />
+                   <f:facet name="header">
+                    Scroll Down to Load More Comments
+                </f:facet>    
+                <h:outputText value="Posted by:    #{userController.getPIDByID(c.posterID)}    on    #{c.timeStamp}"/>
+                        <h:outputText value="#{c.commentText}" />
+                    
+                </p:dataScroller>
+                   
+            </h:form> 
         </ui:define>
     </ui:composition>
     <!--h:head>
@@ -61,16 +90,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
         <h:outputText value="#{questionController.getQuestion(param.qid).numberLeftVotes}" />
         <h:outputText value="#{questionController.getQuestion(param.qid).numberRightVotes}" />
         
-        <h:form>           
-            <p:editor id="editor" widgetVar="editorWidget" value="" width="600" />
-            <h:panelGrid columns="2" style="margin-top: 10px">
-                <p:commandButton value="Submit" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
-                <p:commandButton value="Clear" type="button" onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
-            </h:panelGrid>
-            <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
-                <h:outputText id="display" value="" escape="false" />
-            </p:dialog>
-        </h:form> 
+        
         </ui:define>
     </ui:composition//-->
 
