@@ -36,7 +36,7 @@
                     </f:facet>
 
                     <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                        <p:graphicImage name="/images/Harry_Callahan.png" /> 
+                        <p:graphicImage name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
 
                         <p:outputPanel>
                             <h:panelGrid columns="3" cellpadding="5">
