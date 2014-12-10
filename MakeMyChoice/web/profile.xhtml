@@ -57,10 +57,9 @@ Copyright © 2014 Brian Green. All rights reserved.
             </h:panelGrid>       
 
             <h:form>        
-                <h:panelGrid columns="3" cellpadding="5">
-                    <p:photoCam widgetVar="pc" listener="#{photoCamView.oncapture}" update="myPhoto"/>
-                    <p:commandButton type="button" value="Capture" onclick="PF('pc').capture()"/>
-                    <p:graphicImage id="myPhoto" name="images/#{photoCamView.filename}.png" />
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:photoCam widgetVar="pc" listener="#{photoCamView.oncapture}" />
+                    <p:commandButton  value="Capture" onclick="PF('pc').capture()" action = "${photoCamView.refreshPage()}"/>
                 </h:panelGrid>
             </h:form>
             <h:form> 

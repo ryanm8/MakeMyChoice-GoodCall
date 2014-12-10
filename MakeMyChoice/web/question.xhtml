@@ -9,50 +9,56 @@ Copyright © 2014 Ryan Miller. All rights reserved.
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    <ui:define name="head">
-        <title></title>
+    <!--ui:define name="head">
+        <title>Question</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </ui:define>
+    </ui:define-->
     
-    <ui:composition template="/template.xhtml">
+    <h:head>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
+        <title>Question</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+
+    <ui:composition template="/postQuestionTemplate.xhtml">
         <ui:define name="body">
             <h:form>
-                    <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getQuestionById(param.qid).title}" /></h1>
-                    <h2 style="margin-left:40px;"><h:outputText value="#{questionController.getQuestionById(param.qid).description}" /></h2>
-                    <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getStatusString(user.id, param.qid, votedonController)}" style="text-align: center"/></h1>
-                    
-                    <h:panelGrid columns="2" style="width:100%">
-                        <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
+                <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getQuestionById(param.qid).title}" /></h1>
+                <h2 style="margin-left:40px;"><h:outputText value="#{questionController.getQuestionById(param.qid).description}" /></h2>
+                <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getStatusString(user.id, param.qid, votedonController)}" style="text-align: center"/></h1>
 
-                                <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes"/>
-                                <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Left')]}" 
-                                                height="80" alt="Checkbox">
-                                    <f:param name="id" value="#{param.qid}" />
-                                </p:graphicImage>
-                                <p:commandButton  disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteLeftOption(user.id, votedonController)}" value="Vote Left">
-                                    <f:param name="id" value="#{param.qid}" />
-                                </p:commandButton>
-                            </h:panelGrid>
-                        </p:panel>
-                        <p:panel header="#{questionController.getQuestionById(param.qid).rightOptionDescription}" style="text-align:center">
-                            <h:panelGrid columns="1" style="width:100%">
+                <h:panelGrid columns="2" style="width:100%">
+                    <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
 
-                                <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes"/>
-                                <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Right')]}" 
-                                                height="80" alt="Checkbox">
-                                    <f:param name="id" value="#{param.qid}" />
-                                </p:graphicImage>
-                                <p:commandButton disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteRightOption(user.id, votedonController)}" value="Vote Right">
-                                    <f:param name="id" value="#{param.qid}" />
-                                </p:commandButton>
-                            </h:panelGrid>
-                        </p:panel>
-                    </h:panelGrid>
-            <div></div>
+                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes"/>
+                            <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Left')]}" 
+                                            height="80" alt="Checkbox">
+                                <f:param name="id" value="#{param.qid}" />
+                            </p:graphicImage>
+                            <p:commandButton  disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteLeftOption(user.id, votedonController)}" value="Vote Left">
+                                <f:param name="id" value="#{param.qid}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel header="#{questionController.getQuestionById(param.qid).rightOptionDescription}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+
+                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes"/>
+                            <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Right')]}" 
+                                            height="80" alt="Checkbox">
+                                <f:param name="id" value="#{param.qid}" />
+                            </p:graphicImage>
+                            <p:commandButton disabled="#{questionController.isVotingDisabled(user.id, votedonController)}" action="#{questionController.voteRightOption(user.id, votedonController)}" value="Vote Right">
+                                <f:param name="id" value="#{param.qid}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:panelGrid>
+                <div></div>
             </h:form>
             <h:form>           
-               <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="width: 100%" />
+                <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="width: 100%" />
                 <h:panelGrid columns="2" style="margin-top: 10px">
                     <p:commandButton update="commentList" value="Post Comment" action="#{commentsController.postComment(user.id)}"  icon="ui-icon-disk" >
                         <f:param name="id" value="#{param.qid}" />
@@ -62,29 +68,29 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                 <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
                     <h:outputText id="display" value="#{commentsController.selected.commentText}" escape="false" />
                 </p:dialog>
-            
-               <p:dataScroller id="commentList" value="#{commentsController.getById()}" var="c" chunkSize="50" mode="inline" scrollHeight="500" >
+
+                <p:dataScroller id="commentList" value="#{commentsController.getById()}" var="c" chunkSize="50" mode="basic" scrollHeight="500" >
                     <f:param name="id" value="#{param.qid}" />
-                   <f:facet name="header">
-                    Scroll Down to Load More Comments
-                </f:facet>    
-               <!-- <h:outputText value="Posted by:    #{userController.getPIDByID(c.posterID)}    on    #{c.timeStamp}"/>
-                <h:outputText value="#{c.commentText}" escape="false"/>-->
-                
-                <h:panelGrid columns="2" style="margin-bottom: 25px; text-align: left" >
-                    <p:graphicImage height="80" name="/images/${userController.getProfilePic(userController.getPIDByID(c.posterID))}.png" /> 
- 
-                    <p:outputPanel>
-                        <h:panelGrid style="vertical-align: top; width: 100%" columns="1" cellpadding="5">
-                            <h:outputText style="float: left" value="Posted by:    #{userController.getPIDByID(c.posterID)}" />
-                            <h:outputText value="on    #{c.timeStamp}" />
-                            <h:outputText value="#{c.commentText}" escape="false" style="margin-left: 25px"/>
-                        </h:panelGrid>
-                    </p:outputPanel>
-                </h:panelGrid>
-                    
+                    <f:facet name="header">
+                        Comments
+                    </f:facet>    
+                   <!-- <h:outputText value="Posted by:    #{userController.getPIDByID(c.posterID)}    on    #{c.timeStamp}"/>
+                    <h:outputText value="#{c.commentText}" escape="false"/>-->
+
+                    <h:panelGrid columns="2" style="margin-bottom: 25px; text-align: left" >
+                        <p:graphicImage height="80" name="/images/${userController.getProfilePic(userController.getPIDByID(c.posterID))}.png" /> 
+
+                        <p:outputPanel>
+                            <h:panelGrid style="vertical-align: top; width: 100%" columns="1" cellpadding="5">
+                                <h:outputText style="float: left" value="Posted by:    #{userController.getPIDByID(c.posterID)}" />
+                                <h:outputText value="on    #{c.timeStamp}" />
+                                <h:outputText value="#{c.commentText}" escape="false" style="margin-left: 25px"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                    </h:panelGrid>
+
                 </p:dataScroller>
-                   
+
             </h:form> 
         </ui:define>
     </ui:composition>

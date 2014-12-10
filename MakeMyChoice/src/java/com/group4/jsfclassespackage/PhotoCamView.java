@@ -27,7 +27,12 @@ import java.io.OutputStream;
 public class PhotoCamView {
 
     private String filename;
+    public String uploaded;
 
+    public String getUploaded() {
+        System.out.println("Uploaded is: " + uploaded);
+        return uploaded;
+    }
     private String getRandomImageName() {
         int i = (int) (Math.random() * 10000000);
 
@@ -37,6 +42,11 @@ public class PhotoCamView {
     public String getFilename() {
         System.out.println("The filename is: " + filename);
         return filename;
+    }
+    
+    public String refreshPage()
+    {
+        return "profile.xhtml?faces-redirect=true";
     }
 
 //    public void oncapture(CaptureEvent captureEvent) {
@@ -83,7 +93,9 @@ public class PhotoCamView {
 //        }
 //    }
 
-    public void oncapture(CaptureEvent captureEvent) {
+    public void oncapture(CaptureEvent captureEvent) 
+    {
+        uploaded = "Uploaded!";
         filename = getRandomImageName();
         byte[] data = captureEvent.getData();
         String userPID = FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{user.pid}", String.class);
