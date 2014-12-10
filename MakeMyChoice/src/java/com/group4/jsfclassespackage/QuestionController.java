@@ -58,6 +58,11 @@ public class QuestionController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+    
+    public String preparePost() {
+        prepareCreate();
+        return "/postQuestion.xhtml";
+    }
 
     public String navigateWithSelection(String id) {
         return "question.xhtml?faces-redirect=true&" + "qid=" + id;
