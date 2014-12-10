@@ -125,7 +125,7 @@ public class UserController implements Serializable {
     
         public String getProfilePic(String userPID)
     {
-        String picture = "profilePic";
+        String picture = "Harry_Callahan";
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String newFileName = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "images" + File.separator + userPID + ".png";
         File f = new File(newFileName);
