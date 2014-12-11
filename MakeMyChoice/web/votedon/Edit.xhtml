@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VotedonEditDlg" widgetVar="VotedonEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditVotedonTitle}">
+            <h:form id="VotedonEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{votedonController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditVotedonLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{votedonController.selected.id}" title="#{bundle.EditVotedonTitle_id}" required="true" requiredMessage="#{bundle.EditVotedonRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditVotedonLabel_userID}" for="userID" />
+                        <p:inputText id="userID" value="#{votedonController.selected.userID}" title="#{bundle.EditVotedonTitle_userID}" required="true" requiredMessage="#{bundle.EditVotedonRequiredMessage_userID}"/>
+                        <p:outputLabel value="#{bundle.EditVotedonLabel_questionID}" for="questionID" />
+                        <p:inputText id="questionID" value="#{votedonController.selected.questionID}" title="#{bundle.EditVotedonTitle_questionID}" required="true" requiredMessage="#{bundle.EditVotedonRequiredMessage_questionID}"/>
+                        <p:outputLabel value="#{bundle.EditVotedonLabel_leftRight}" for="leftRight" />
+                        <p:inputText id="leftRight" value="#{votedonController.selected.leftRight}" title="#{bundle.EditVotedonTitle_leftRight}" required="true" requiredMessage="#{bundle.EditVotedonRequiredMessage_leftRight}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{votedonController.update}" value="#{bundle.Save}" update="display,:VotedonListForm:datalist,:growl" oncomplete="handleSubmit(args, 'VotedonEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VotedonEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

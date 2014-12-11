@@ -35,6 +35,7 @@ public class TextMsgSender {
     private EntityManager em;
 
     @Schedule(dayOfWeek = "*", month = "*", hour = "14", dayOfMonth = "*", year = "*", minute = "10", second = "0", persistent = false)
+    
     public void myTimer() {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate1 = df1.format(new Date());
@@ -50,11 +51,6 @@ public class TextMsgSender {
         }
     }
 
-    /**
-     * Sends text message to a specific user when a Due date has passed
-     * @param poster - The user who posted the question
-     * @param answer - The result of voting.
-     */
     public void sendText(User poster, Question answer) {
     
         try{
