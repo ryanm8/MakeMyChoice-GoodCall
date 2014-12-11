@@ -6,45 +6,35 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <style>
+        .panelGridLeft
+        {
+            text-align: left;
+        }
+    </style>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
         <title>Home</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <ui:composition template="/postQuestionTemplate.xhtml">
         <ui:define name="body">
-            <!--
-            <h:form id="form">           
-                <p:growl id="msgs" showDetail="true" />
-                <p:accordionPanel multiple="true" value="#{questionController.getallItems()}" var="q">
-                    <p:tab title="#{q.title}">
-                        <h:panelGrid columns="3" cellpadding="10">
-                            <p:graphicImage name="/images/Harry_Callahan.png" />
-                            <h:outputText value="#{q.description}" />
-                            <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                            <h:outputText value="   " />
-                            <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
-                            <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
-                        </h:panelGrid>
-                    </p:tab>
-                </p:accordionPanel>
-            </h:form>
-            //-->
             <h:form> 
-                <p:dataScroller value="#{questionController.getallItems()}" var="q" chunkSize="10" mode="inline" scrollHeight="500">
+                <p:dataScroller value="#{questionController.getallItems()}" var="q" chunkSize="10" mode="inline" scrollHeight="620">
                     <f:facet name="header">
                         Scroll Down to Load More Questions
                     </f:facet>
 
-                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                        <p:graphicImage name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
+                    <h:panelGrid columns="2" cellpadding="2">
+                        <p:graphicImage style="height: auto; width: auto; max-height: 180px; max-width: 180px;" 
+                                        name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
 
-                        <p:outputPanel>
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputText value="#{q.title}" />
-                                <h:outputText value="#{q.description}" />
-                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                        <p:outputPanel styleClass="panelGridLeft">
+                            <h:panelGrid columns="3" cellpadding="5" width="100%">
+                                <h:outputText value="#{q.title}"/>
                                 <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                                <h:outputText value="#{q.leftOptionDescription}" />
+                                <h:outputText value="#{q.rightOptionDescription}" />
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
