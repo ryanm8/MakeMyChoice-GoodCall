@@ -36,20 +36,20 @@ Copyright © 2014 Brian Green. All rights reserved.
                     <p:graphicImage name="images/${userController.getProfilePic(user.pid)}.png" id="myPhoto" />
                 </f:facet>
 
-                <h:outputText value="Name: " />
-                <h:outputText value="#{user.firstName} #{user.lastName}" />
+                <h:outputText value="Name: " style="font-size:120%"/>
+                <h:outputText value="#{user.firstName} #{user.lastName}" style="font-size:120%"/>
 
-                <h:outputText value="Username: " />
-                <h:outputText value="#{user.pid}" />
+                <h:outputText value="Username: " style="font-size:120%"/>
+                <h:outputText value="#{user.pid}" style="font-size:120%"/>
 
-                <h:outputText value="Email: " />
-                <h:outputText value="#{user.email}" />
+                <h:outputText value="Email: " style="font-size:120%"/>
+                <h:outputText value="#{user.email}" style="font-size:120%"/>
 
-                <h:outputText value="Phone : " />
-                <h:outputText value="#{user.cellNumber}" />
+                <h:outputText value="Phone : " style="font-size:120%"/>
+                <h:outputText value="#{user.cellNumber}" style="font-size:120%"/>
 
 
-                <h:outputText value="Edit: " />
+                <h:outputText value="Edit: " style="font-size:120%"/>
                 <h:form>
                     <p:commandButton id="editUserButton"   icon="ui-icon-pencil" value="Edit User Settings" update=":UserEditForm" oncomplete="PF('UserEditDialog').show()"  action="#{usermanager.populate(user)}" disabled="false"/>
                 </h:form>
@@ -75,11 +75,14 @@ Copyright © 2014 Brian Green. All rights reserved.
 
                         <p:outputPanel styleClass="panelGridLeft">
                             <h:panelGrid columns="3" cellpadding="5" width="100%">
-                                <h:outputText value="#{q.title}"/>
-                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
-                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                                <h:outputText value="#{q.leftOptionDescription}" />
-                                <h:outputText value="#{q.rightOptionDescription}" />
+                                <h:outputText value="#{q.title}" style="font-weight:bold; font-size:160%;" />
+                                <h:outputText value="   "/>
+                                <h:outputText value="   "/>
+                                <h:outputText value="Asked by: You" style="font-size:110%"/>
+                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" style="font-size:110%"/>
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question" style="font-size:110%"/>
+                                <h:outputText value="Left option: #{q.leftOptionDescription}" style="font-size:110%"/>
+                                <h:outputText value="Right option: #{q.rightOptionDescription}" style="font-size:110%"/>
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
