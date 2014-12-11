@@ -36,8 +36,8 @@
                                 <h:outputText value="Asked by: #{userController.getPIDByID(q.askerID)}" style="font-size:110%"/>
                                 <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" style="font-size:110%"/>
                                 <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question" style="font-size:110%"/>
-                                <h:outputText value="#{q.leftOptionDescription}" style="font-size:110%"/>
-                                <h:outputText value="#{q.rightOptionDescription}" style="font-size:110%"/>
+                                <h:outputText value="Left option: #{q.leftOptionDescription}" style="font-size:110%"/>
+                                <h:outputText value="Right option: #{q.rightOptionDescription}" style="font-size:110%"/>
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
