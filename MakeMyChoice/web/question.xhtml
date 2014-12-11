@@ -27,7 +27,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                 <h2 style="margin-left:40px;"><h:outputText value="#{questionController.getQuestionById(param.qid).description}" /></h2>
                 <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getStatusString(user.id, param.qid, votedonController)}" style="text-align: center"/></h1>
 
-                <h:panelGrid columns="2" style="width:100%">
+                <h:panelGrid columns="2" style="width:50%; margin-left: 25%;">
                     <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 
