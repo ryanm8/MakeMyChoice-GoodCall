@@ -31,7 +31,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                     <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 
-                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes"/>
+                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberLeftVotes}" id="numLeftVotes" style="font-size:260%"/>
                             <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Left')]}" 
                                             height="80" alt="Checkbox">
                                 <f:param name="id" value="#{param.qid}" />
@@ -44,7 +44,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                     <p:panel header="#{questionController.getQuestionById(param.qid).rightOptionDescription}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 
-                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes"/>
+                            <h:outputText value="#{questionController.getQuestionById(param.qid).numberRightVotes}" id="numRightVotes" style="font-size:260%"/>
                             <p:graphicImage url="#{resource[votedonController.getCheckImage(user.id, 'Right')]}" 
                                             height="80" alt="Checkbox">
                                 <f:param name="id" value="#{param.qid}" />
