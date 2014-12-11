@@ -221,7 +221,7 @@ public class QuestionController implements Serializable {
      * @return List of Assignments
      */
     public List<Question> getItemsByOwner(int assigneeId) {
-        items = getFacade().findByQueryOneParam("SELECT a FROM Question a WHERE a.askerID LIKE :ID", "ID", assigneeId);
+        items = getFacade().findByQueryOneParam("SELECT a FROM Question a WHERE a.askerID LIKE :ID ORDER BY a.timeStamp DESC", "ID", assigneeId);
         return items;
     }
     
