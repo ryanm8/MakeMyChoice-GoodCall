@@ -6,6 +6,12 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <style>
+        .panelGridLeft
+        {
+            text-align: left;
+        }
+    </style>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
         <title>Home</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
@@ -22,16 +28,20 @@
                         <p:graphicImage style="height: auto; width: auto; max-height: 180px; max-width: 180px;" 
                                         name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
 
-                        <p:outputPanel>
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputText value="#{q.title}" />
-                                <h:outputText value="#{q.description}" />
-                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
-                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                        <p:outputPanel styleClass="panelGridLeft">
+                            <h:panelGrid columns="3" cellpadding="5" width="100%">
+                                <h:outputText value="#{userController.getPIDByID(q.askerID)}" style="font-weight:bold; font-size:160%;" />
+                                <h:outputText value="   "/>
+                                <h:outputText value="   "/>
+                                <h:outputText value="#{q.title}" style="font-size:110%"/>
+                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" style="font-size:110%"/>
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question" style="font-size:110%"/>
+                                <h:outputText value="#{q.leftOptionDescription}" style="font-size:110%"/>
+                                <h:outputText value="#{q.rightOptionDescription}" style="font-size:110%"/>
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
+                    <hr style="width: 100%; background-color: black;"/>
                 </p:dataScroller>
             </h:form>
 
