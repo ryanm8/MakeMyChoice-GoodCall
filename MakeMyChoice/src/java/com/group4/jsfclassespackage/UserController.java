@@ -122,23 +122,22 @@ public class UserController implements Serializable {
     public List<User> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
-    
-        public String getProfilePic(String userPID)
-    {
+
+    public String getProfilePic(String userPID) {
         String picture = "Harry_Callahan";
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String newFileName = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "images" + File.separator + userPID + ".png";
         File f = new File(newFileName);
-        if(f.exists() && !f.isDirectory()) 
-        {
+        if (f.exists() && !f.isDirectory()) {
             return userPID;
         }
         return picture;
-                
+
     }
-        
-        /**
+
+    /**
      * Returns list of group Assignments for given AssigneeId
+     *
      * @param assigneeId The id for the assignee
      * @return List of Assignments
      */
