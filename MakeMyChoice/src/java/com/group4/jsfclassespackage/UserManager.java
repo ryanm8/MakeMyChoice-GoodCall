@@ -221,6 +221,7 @@ public class UserManager {
                     }
                     user.setEmail(email);
                     user.setPassword(password);
+                    user.setCellNumber(cell);
                     try {
                         utx.begin();
                         em.merge(user);
