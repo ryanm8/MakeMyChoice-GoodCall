@@ -30,14 +30,18 @@
 
                         <p:outputPanel styleClass="panelGridLeft">
                             <h:panelGrid columns="3" cellpadding="5" width="100%">
-                                <h:outputText value="#{q.title}"/>
-                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
-                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                                <h:outputText value="#{q.leftOptionDescription}" />
-                                <h:outputText value="#{q.rightOptionDescription}" />
+                                <h:outputText value="#{userController.getPIDByID(q.askerID)}" style="font-weight:bold; font-size:160%;" />
+                                <h:outputText value="   "/>
+                                <h:outputText value="   "/>
+                                <h:outputText value="#{q.title}" style="font-size:110%"/>
+                                <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" style="font-size:110%"/>
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question" style="font-size:110%"/>
+                                <h:outputText value="#{q.leftOptionDescription}" style="font-size:110%"/>
+                                <h:outputText value="#{q.rightOptionDescription}" style="font-size:110%"/>
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
+                    <hr style="width: 100%; background-color: black;"/>
                 </p:dataScroller>
             </h:form>
 
