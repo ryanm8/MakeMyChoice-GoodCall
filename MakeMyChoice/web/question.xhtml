@@ -13,7 +13,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
         <title>Question</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </ui:define-->
-    
+
     <h:head>
         <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
         <title>Question</title>
@@ -74,8 +74,6 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                     <f:facet name="header">
                         Comments
                     </f:facet>    
-                   <!-- <h:outputText value="Posted by:    #{userController.getPIDByID(c.posterID)}    on    #{c.timeStamp}"/>
-                    <h:outputText value="#{c.commentText}" escape="false"/>-->
 
                     <h:panelGrid columns="2" cellpadding="2" style="text-align: left" >
                         <p:graphicImage style="height: auto; width: auto; max-height: 180px; max-width: 180px;"
@@ -96,22 +94,5 @@ Copyright © 2014 Ryan Miller. All rights reserved.
             </h:form> 
         </ui:define>
     </ui:composition>
-    <!--h:head>
-        <title>Question</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <ui:composition template="/postQuestionTemplate.xhtml">
-        <ui:define name="body">
-        <h:outputText value="#{questionController.getQuestion(param.qid).title}" style="font-weight:bold" />
-        <h:outputText value="#{questionController.getQuestion(param.qid).description}" />
-        <h:outputText value="#{questionController.getQuestion(param.qid).leftOptionDescription}" />
-        <h:outputText value="#{questionController.getQuestion(param.qid).rightOptionDescription}" />
-        <h:outputText value="#{questionController.getQuestion(param.qid).numberLeftVotes}" />
-        <h:outputText value="#{questionController.getQuestion(param.qid).numberRightVotes}" />
-        
-        
-        </ui:define>
-    </ui:composition//-->
 
 </html>

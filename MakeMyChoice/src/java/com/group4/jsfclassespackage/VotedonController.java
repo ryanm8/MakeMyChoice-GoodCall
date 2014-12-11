@@ -78,6 +78,14 @@ public class VotedonController implements Serializable {
         return getFacade().findByQueryTwoParams("SELECT a FROM Votedon a WHERE a.userID LIKE :USERID AND a.questionID LIKE :QUESTIONID", "USERID", userId, "QUESTIONID", questionId);
     }
     
+    /**
+     * returns a string for the webpage to display whether the user can vote or
+     * has already voted
+     *
+     * @param userId the id of the user who is viewing the page
+     * @param questionId the currently viewed question
+     * @return the string to be displayed to the user
+     */
     public String getStatusString(int userId, int questionId) {
         if (hasUserVoted(userId, questionId)) {
             return "You have voted on this question.";
@@ -86,14 +94,19 @@ public class VotedonController implements Serializable {
         }
     }
     
+    /**
+     * gets the path to an image used to show the user which option they voted
+     * for.
+     * 
+     * @param userId the user viewing the question
+     * @param leftRight a string saying which option to get an image for.
+     * @return the path to the image
+     */
     public String getCheckImage(int userId, String leftRight) {
-        System.out.println("Here it is! " + FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap());
         String questionIdString = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("qid");
-        //I know this looks hacky. It's because PrimeFaces has different
-        //parameter settings at different times depending on if this is the
-        //first time the page is navigated to or not.
+        //Necessary because the id will be different depending on when
+        //Primefaces calls this function.
         if (questionIdString == null) {
             questionIdString = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("id");

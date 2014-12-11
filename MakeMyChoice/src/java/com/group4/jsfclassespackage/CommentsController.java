@@ -96,40 +96,53 @@ public class CommentsController implements Serializable {
         }
         return items;
     }
-    
+
+    /**
+     * Uses the questionId parameter to return all comments for the given
+     * question, ordered by timestamp
+     *
+     * @return list of questions
+     */
     public List<Comments> getById() {
         String questionId = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("qid");
-        //I know this looks hacky. It's because PrimeFaces has different
-        //parameter settings at different times depending on if this is the
-        //first time the page is navigated to or not.
+        //Necessary because the id will be different depending on when
+        //Primefaces calls this function.
         if (questionId == null) {
             questionId = FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap().get("id");
+                    .getExternalContext().getRequestParameterMap().get("id");
         }
         return getFacade().findByQueryOneParam("SELECT a FROM Comments a WHERE a.questionID LIKE :ID ORDER BY a.timeStamp DESC", "ID", Integer.parseInt(questionId));
     }
-    
+
+    /**
+     * Adds the current selected comment to the database with the given userId
+     * and the questionId parameter set.
+     *
+     * @param userId the id of the user posting the comment
+     * @return a string used to refresh the page.
+     */
     public String postComment(int userId) {
         String questionId = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("qid");
-        //I know this looks hacky. It's because PrimeFaces has different
-        //parameter settings at different times depending on if this is the
-        //first time the page is navigated to or not.
+        //Necessary because the id will be different depending on when
+        //Primefaces calls this function.
         if (questionId == null) {
             questionId = FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap().get("id");
+                    .getExternalContext().getRequestParameterMap().get("id");
         }
         selected.setId(0);
         selected.setPosterID(userId);
         selected.setQuestionID(Integer.parseInt(questionId));
         selected.setTimeStamp(new Timestamp((new Date()).getTime()));
+
         //System.out.println("This is the selected thing " + selected.getCommentText() + selected.getTimeStamp());
         create();
         Question q = (Question) em.createNamedQuery("Question.natfindById").setParameter(1, questionId).getSingleResult();
         User user = (User) em.createNamedQuery("user.findById").setParameter(1, q.getAskerID()).getSingleResult();
         User commenter = (User) em.createNamedQuery("user.findById").setParameter(1, userId).getSingleResult();
         sendEmail(user.getFirstName(), q.getTitle(), user.getEmail(), selected.getCommentText(), commenter.getPid());
+
         return "question.xhtml?faces-redirect=true&" + "qid=" + questionId;
     }
 

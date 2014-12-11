@@ -20,8 +20,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import java.util.Date;
 
-
-
 @Named("questionController")
 @SessionScoped
 public class QuestionController implements Serializable {
@@ -30,7 +28,6 @@ public class QuestionController implements Serializable {
     private com.group4.sessionbeanpackage.QuestionFacade ejbFacade;
     private List<Question> items = null;
     private Question selected;
-    
 
     public QuestionController() {
     }
@@ -58,7 +55,7 @@ public class QuestionController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-    
+
     public String preparePost() {
         prepareCreate();
         return "/postQuestion.xhtml";
@@ -67,9 +64,11 @@ public class QuestionController implements Serializable {
     public String navigateWithSelection(String id) {
         return "question.xhtml?faces-redirect=true&" + "qid=" + id;
     }
-    public String navigateHome()    {
+
+    public String navigateHome() {
         return "index.xhtml?faces-redirect=true";
     }
+
     public void createQuestion(int userID) {
         selected.setId(0);
         selected.setOpenClosed("Open");
@@ -80,6 +79,7 @@ public class QuestionController implements Serializable {
         create();
 
     }
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("QuestionCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -105,14 +105,20 @@ public class QuestionController implements Serializable {
         }
         return items;
     }
-    
+
     public Question getQuestionById(String id) {
-        System.out.println("This is the id: " + id);
         return getFacade().find(Integer.parseInt(id));
     }
-    
-    public String voteLeftOption(int userId, VotedonController 
-            votedonController) {
+
+    /**
+     * Increments the left option question in the questionId parameter and
+     * creates a votedOn object for the current question and user.
+     *
+     * @param userId the user who voted
+     * @param votedonController the controller for the votedon table
+     * @return a string used to refresh the page
+     */
+    public String voteLeftOption(int userId, VotedonController votedonController) {
         String questionId = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("id");
         if (!votedonController.hasUserVoted(userId, Integer.parseInt(questionId))) {
@@ -125,9 +131,16 @@ public class QuestionController implements Serializable {
         }
         return "";
     }
-    
-     public String voteRightOption(int userId, VotedonController 
-            votedonController) {
+
+    /**
+     * Increments the right option question in the questionId parameter and
+     * creates a votedOn object for the current question and user.
+     *
+     * @param userId the user who voted
+     * @param votedonController the controller for the votedon table
+     * @return a string used to refresh the page
+     */
+    public String voteRightOption(int userId, VotedonController votedonController) {
         String questionId = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("id");
         if (!votedonController.hasUserVoted(userId, Integer.parseInt(questionId))) {
@@ -140,35 +153,56 @@ public class QuestionController implements Serializable {
         }
         return "";
     }
-     
-    public String getStatusString(int userId, String questionId, 
+
+    /**
+     * returns a string for the webpage to display whether the user can vote or
+     * has already voted
+     *
+     * @param userId the id of the user who is viewing the page
+     * @param questionId the currently viewed question
+     * @param votedonController controller for the votedOn table
+     * @return the string to be displayed to the user
+     */
+    public String getStatusString(int userId, String questionId,
             VotedonController votedonController) {
         if (getQuestionById(questionId).getOpenClosed().equals("Open")) {
             return votedonController.getStatusString(userId, Integer.parseInt(questionId));
         }
         return "This question is now closed.";
     }
-    
-    public boolean canUserVote(int userId, String questionId, 
+
+    /**
+     * detects whether or not the user is allowed to vote on this question
+     *
+     * @param userId the id of the user who is viewing the page
+     * @param questionId the currently viewed question
+     * @param votedonController controller for the votedOn table
+     * @return true if the user can vote
+     */
+    public boolean canUserVote(int userId, String questionId,
             VotedonController votedonController) {
         if (getQuestionById(questionId).getOpenClosed().equals("Open")) {
             return !votedonController.hasUserVoted(userId, Integer.parseInt(questionId));
         }
         return false;
     }
-    
-    public String isVotingDisabled(int userId, 
+
+    /**
+     * creates a string used to disable voting buttons
+     *
+     * @param userId the id of the user viewing the page
+     * @param votedonController controller for the votedOn table
+     * @return the string used to disable or enable voting buttons
+     */
+    public String isVotingDisabled(int userId,
             VotedonController votedonController) {
-        System.out.println(FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap());
         String questionId = FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("qid");
-        //I know this looks hacky. It's because PrimeFaces has different
-        //parameter settings at different times depending on if this is the
-        //first time the page is navigated to or not.
+        //Necessary because the id will be different depending on when
+        //Primefaces calls this function.
         if (questionId == null) {
             questionId = FacesContext.getCurrentInstance()
-                .getExternalContext().getRequestParameterMap().get("id");
+                    .getExternalContext().getRequestParameterMap().get("id");
         }
         if (canUserVote(userId, questionId, votedonController)) {
             return "false";
@@ -215,8 +249,10 @@ public class QuestionController implements Serializable {
     public List<Question> getItemsAvailableSelectOne() {
         return getFacade().findAll();
     }
+
     /**
      * Returns list of group Assignments for given AssigneeId
+     *
      * @param assigneeId The id for the assignee
      * @return List of Assignments
      */
@@ -224,9 +260,10 @@ public class QuestionController implements Serializable {
         items = getFacade().findByQueryOneParam("SELECT a FROM Question a WHERE a.askerID LIKE :ID ORDER BY a.timeStamp DESC", "ID", assigneeId);
         return items;
     }
-    
+
     /**
      * Returns list of group Assignments for given AssigneeId
+     *
      * @param assigneeId The id for the assignee
      * @return List of Assignments
      */
@@ -234,7 +271,6 @@ public class QuestionController implements Serializable {
         items = getFacade().findByQueryNoParam("SELECT a FROM Question a ORDER BY a.timeStamp DESC");
         return items;
     }
-    
 
     @FacesConverter(forClass = Question.class)
     public static class QuestionControllerConverter implements Converter {
