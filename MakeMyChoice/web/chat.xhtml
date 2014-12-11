@@ -4,30 +4,42 @@ Created by Chris Hoffman on 2014.12.06
 Copyright © 2014 Chris Hoffman. All rights reserved.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
+<html 
+    content-type="text/html"
+    page-encoding="UTF-8" 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:l="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/images/favicon.ico"/>
         <title>Chat</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <form>
-            <table>
-                <tr>
-                    <td>
-                        Chat Log<br/>
-                        <textarea readonly="true" rows="40" cols="100" id="chatlog"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input id="textField" name="name" value="" type="text" size="80"/>
-                        <input onclick="join('#{user.pid}');" value="Join Chat" type="button"/>
-                        <input id="sendChat" onclick="send_message();" value="Send" type="button"/><p/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-        <div id="output"></div>
-        <script language="javascript" type="text/javascript" src="websocket.js"></script>
-    </body>
+    </h:head>
+    <ui:composition template="/postQuestionTemplate.xhtml">
+        <ui:define name="body">
+            <h:form>
+                <table>
+                    <tr>
+                        <td>
+                            Chat Log
+                            <br/>
+                            <textarea readonly="true" rows="40" cols="100" id="chatlog"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="textField" name="name" value="" type="text" size="80"/>
+                            <input onclick="join('#{user.pid}');" value="Join Chat" type="button"/>
+                            <input id="sendChat" onclick="send_message();" value="Send" type="button"/><p/>
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+            <div id="output"></div>
+            <script language="javascript" type="text/javascript" src="websocket.js"></script>
+        </ui:define>
+    </ui:composition>
 </html>
