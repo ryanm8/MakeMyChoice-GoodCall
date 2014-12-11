@@ -138,10 +138,10 @@ public class CommentsController implements Serializable {
 
         //System.out.println("This is the selected thing " + selected.getCommentText() + selected.getTimeStamp());
         create();
-        Question q = (Question) em.createNamedQuery("Question.natfindById").setParameter(1, questionId).getSingleResult();
-        User user = (User) em.createNamedQuery("user.findById").setParameter(1, q.getAskerID()).getSingleResult();
-        User commenter = (User) em.createNamedQuery("user.findById").setParameter(1, userId).getSingleResult();
-        sendEmail(user.getFirstName(), q.getTitle(), user.getEmail(), selected.getCommentText(), commenter.getPid());
+        //Question q = (Question) em.createNamedQuery("Question.natfindById").setParameter(1, questionId).getSingleResult();
+        //User user = (User) em.createNamedQuery("user.findById").setParameter(1, q.getAskerID()).getSingleResult();
+        //User commenter = (User) em.createNamedQuery("user.findById").setParameter(1, userId).getSingleResult();
+        //sendEmail(user.getFirstName(), q.getTitle(), user.getEmail(), selected.getCommentText(), commenter.getPid());
 
         return "question.xhtml?faces-redirect=true&" + "qid=" + questionId;
     }

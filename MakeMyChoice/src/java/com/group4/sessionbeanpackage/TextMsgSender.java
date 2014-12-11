@@ -34,7 +34,7 @@ public class TextMsgSender {
     @PersistenceContext 
     private EntityManager em;
 
-    @Schedule(dayOfWeek = "*", month = "*", hour = "0", dayOfMonth = "*", year = "*", minute = "46", second = "0", persistent = false)
+    @Schedule(dayOfWeek = "*", month = "*", hour = "0", dayOfMonth = "*", year = "*", minute = "47", second = "0", persistent = false)
     
     public void myTimer() {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
