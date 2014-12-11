@@ -57,9 +57,11 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                 </h:panelGrid>
                 <div></div>
             </h:form>
-            <h:form>           
-                <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="width: 100%" />
-                <h:panelGrid columns="2" style="margin-top: 10px">
+            <h:form> 
+                <h:outputText value="Write your comment here."/>
+                <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="margin-top: 20px; width: 76%; margin-left: 12%" />
+                
+                <h:panelGrid columns="2" style="margin-top: 2px; margin-left: 12%; margin-bottom: 30px">
                     <p:commandButton update="commentList" value="Post Comment" action="#{commentsController.postComment(user.id)}"  icon="ui-icon-disk" >
                         <f:param name="id" value="#{param.qid}" />
                     </p:commandButton>
@@ -69,7 +71,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                     <h:outputText id="display" value="#{commentsController.selected.commentText}" escape="false" />
                 </p:dialog>
 
-                <p:dataScroller id="commentList" value="#{commentsController.getById()}" var="c" chunkSize="50" mode="basic" scrollHeight="500" >
+                <p:dataScroller id="commentList" value="#{commentsController.getById()}" var="c" chunkSize="50" mode="basic" scrollHeight="500">
                     <f:param name="id" value="#{param.qid}" />
                     <f:facet name="header">
                         Comments
