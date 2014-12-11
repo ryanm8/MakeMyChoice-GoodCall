@@ -83,8 +83,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
 
                         <p:outputPanel>
                             <h:panelGrid style="vertical-align: top; width: 100%" columns="1" cellpadding="5">
-                                <h:outputText style="float: left" value="Posted by:    #{userController.getPIDByID(c.posterID)}" />
-                                <h:outputText value="On    #{c.timeStamp}" />
+                                <h:outputText style="float: left; font-size: 120%" value="Posted by:    #{userController.getPIDByID(c.posterID)} on #{c.timeStamp}" />
                                 <h:outputText value="#{c.commentText}" escape="false" />
                             </h:panelGrid>
                         </p:outputPanel>
