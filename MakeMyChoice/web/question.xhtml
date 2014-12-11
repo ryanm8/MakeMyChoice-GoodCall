@@ -27,7 +27,7 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                 <h2 style="margin-left:40px;"><h:outputText value="#{questionController.getQuestionById(param.qid).description}" /></h2>
                 <h1 style="margin-left:20px;"><h:outputText value="#{questionController.getStatusString(user.id, param.qid, votedonController)}" style="text-align: center"/></h1>
 
-                <h:panelGrid columns="2" style="width:50%; margin-left: 25%;">
+                <h:panelGrid columns="2" style="width:76%; margin-left: 12%; margin-bottom: 20px">
                     <p:panel header="#{questionController.getQuestionById(param.qid).leftOptionDescription}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
 
@@ -58,8 +58,8 @@ Copyright © 2014 Ryan Miller. All rights reserved.
                 <div></div>
             </h:form>
             <h:form> 
-                <h:outputText value="Write your comment here."/>
-                <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style="margin-top: 20px; width: 76%; margin-left: 12%" />
+                <h:outputText value="Write your comment here:" style="margin-left: 12%; font-size: 160%"/>
+                <p:editor id="editor" widgetVar="editorWidget" value="#{commentsController.prepareCreate().commentText}" style=" width: 76%; margin-left: 12%" />
                 
                 <h:panelGrid columns="2" style="margin-top: 2px; margin-left: 12%; margin-bottom: 30px">
                     <p:commandButton update="commentList" value="Post Comment" action="#{commentsController.postComment(user.id)}"  icon="ui-icon-disk" >
