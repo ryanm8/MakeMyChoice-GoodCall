@@ -6,34 +6,28 @@ Copyright © 2014 Chris Hoffman. All rights reserved.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>TODO supply a title</title>
+        <title>Chat</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    <body onload="join('#{user.pid}');">
-        <form action="">
- <table>
- <tr>
- <td>
- Chat Log<br/>
- <textarea readonly="true" rows="6" cols="50" id="chatlog"></textarea>
- </td>
- <td>
- Users<br/>
- <textarea readonly="true" rows="6" cols="20" id="users"></textarea>
- </td>
- </tr>
- <tr>
- <td colspan="2">
- <input id="textField" name="name" value="Duke" type="text"/>
- <!--input onclick="join('{user.pid}');" value="Join" type="button"/-->
- <input onclick="send_message();" value="Send" type="button"/><p/>
- <!--input onclick="disconnect();" value="Disconnect"
-type="button"/-->
- </td>
- </tr>
- </table>
- </form>
- <div id="output"></div>
- <script language="javascript" type="text/javascript" src="websocket.js"></script>
+    <body>
+        <form>
+            <table>
+                <tr>
+                    <td>
+                        Chat Log<br/>
+                        <textarea readonly="true" rows="40" cols="100" id="chatlog"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="textField" name="name" value="" type="text" size="80"/>
+                        <input onclick="join('#{user.pid}');" value="Join Chat" type="button"/>
+                        <input id="sendChat" onclick="send_message();" value="Send" type="button"/><p/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div id="output"></div>
+        <script language="javascript" type="text/javascript" src="websocket.js"></script>
     </body>
 </html>
