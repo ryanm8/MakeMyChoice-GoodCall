@@ -30,6 +30,9 @@
 
                         <p:outputPanel styleClass="panelGridLeft">
                             <h:panelGrid columns="3" cellpadding="5" width="100%">
+                                <h:outputText value="#{userController.getPIDByID(q.askerID)}" style="font-weight:bold" />
+                                <h:outputText value="   "/>
+                                <h:outputText value="   "/>
                                 <h:outputText value="#{q.title}"/>
                                 <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
                                 <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
