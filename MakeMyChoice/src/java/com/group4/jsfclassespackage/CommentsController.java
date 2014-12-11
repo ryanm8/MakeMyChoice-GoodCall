@@ -1,25 +1,36 @@
 package com.group4.jsfclassespackage;
 
 import com.group4.entitypackage.Comments;
+import com.group4.entitypackage.Question;
+import com.group4.entitypackage.User;
 import com.group4.jsfclassespackage.util.JsfUtil;
 import com.group4.jsfclassespackage.util.JsfUtil.PersistAction;
 import com.group4.sessionbeanpackage.CommentsFacade;
-
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.inject.Named;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Named("commentsController")
 @SessionScoped
@@ -30,7 +41,8 @@ public class CommentsController implements Serializable {
     private List<Comments> items = null;
     private Comments selected;
     
-    
+    @PersistenceContext 
+    private EntityManager em;
 
     public CommentsController() {
     }
@@ -112,8 +124,12 @@ public class CommentsController implements Serializable {
         selected.setPosterID(userId);
         selected.setQuestionID(Integer.parseInt(questionId));
         selected.setTimeStamp(new Timestamp((new Date()).getTime()));
-        System.out.println("This is the selected thing " + selected.getCommentText() + selected.getTimeStamp());
-        getFacade().create(selected);
+        //System.out.println("This is the selected thing " + selected.getCommentText() + selected.getTimeStamp());
+        create();
+        Question q = (Question) em.createNamedQuery("Question.natfindById").setParameter(1, questionId).getSingleResult();
+        User user = (User) em.createNamedQuery("user.findById").setParameter(1, q.getAskerID()).getSingleResult();
+        User commenter = (User) em.createNamedQuery("user.findById").setParameter(1, userId).getSingleResult();
+        sendEmail(user.getFirstName(), q.getTitle(), user.getEmail(), selected.getCommentText(), commenter.getPid());
         return "question.xhtml?faces-redirect=true&" + "qid=" + questionId;
     }
 
@@ -196,6 +212,49 @@ public class CommentsController implements Serializable {
             }
         }
 
+    }
+    /**
+     * Sends email from reminder.
+     * @param name - Who the email is being sent to
+     * @param subject - The subject of the method
+     * @param email - The user's email
+     * @param body - The reminder to be sent.
+     */
+    public void sendEmail(String name, String subject, String email, String body, String commenter) {
+        final String username = "planneroftheapes@gmail.com";
+		final String password = "monkeymonkey123";
+ 
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+ 
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+ 
+		try {
+ 
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("planneroftheapes@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(email));
+			message.setSubject("New Comment on your Make My Coice Question: " + subject);
+			message.setText("Hello " + name + ","
+				+ "\n\n Make My Choice just wanted to let you know you that:\n"
+                                + "\n\t" + commenter + " commented on your question: \""+ body +"\"");
+                        //sendEmail(selected.getCommentText(), commenter.getPid());
+			Transport.send(message);
+ 
+			System.out.println("Email Sent to " + email);
+ 
+		} catch (MessagingException e) {
+			System.out.println("Email Not Sent - Failure");
+		}
     }
 
 }

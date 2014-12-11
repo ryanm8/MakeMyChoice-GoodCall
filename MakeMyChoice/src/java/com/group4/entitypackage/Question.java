@@ -69,7 +69,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @NamedNativeQueries({
 //    @NamedNativeQuery(name = "Question.natfindAll", query = "SELECT * FROM question q", resultSetMapping = "question-map"),
-//    @NamedNativeQuery(name = "Question.natfindById", query = "SELECT * FROM question q WHERE q.id = ?", resultSetMapping = "question-map"),
+    @NamedNativeQuery(name = "Question.natfindById", query = "SELECT * FROM question q WHERE q.id = ?", resultSetMapping = "question-map"),
 //    @NamedNativeQuery(name = "Question.natfindByTitle", query = "SELECT * FROM question q WHERE q.title = ?", resultSetMapping = "question-map"),
 //    @NamedNativeQuery(name = "Question.natfindByDescription", query = "SELECT * FROM question q WHERE q.description = ?", resultSetMapping = "question-map"),
 //    @NamedNativeQuery(name = "Question.natfindByAskerID", query = "SELECT * FROM question q WHERE q.askerID = ?", resultSetMapping = "question-map"),
