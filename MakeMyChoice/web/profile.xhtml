@@ -63,24 +63,27 @@ Copyright © 2014 Brian Green. All rights reserved.
                 </h:panelGrid>
             </h:form>
             <h:form> 
-                <p:dataScroller value="#{questionController.getItemsByOwner(user.id)}" var="q" chunkSize="10" mode="basic" scrollHeight="500">
+                <!--#{questionController.getItemsByOwner(user.id)}-->
+                <p:dataScroller value="#{questionController.getItemsByOwner(user.id)}" var="q" chunkSize="10" mode="basic" scrollHeight="620">
                     <f:facet name="header">
-                        My Questions: 
+                        Scroll Down to Load More Questions
                     </f:facet>
 
-                    <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                        <p:graphicImage name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
+                    <h:panelGrid columns="2" cellpadding="2">
+                        <p:graphicImage style="height: auto; width: auto; max-height: 180px; max-width: 180px;" 
+                                        name="/images/${userController.getProfilePic(userController.getPIDByID(q.askerID))}.png" /> 
 
-                        <p:outputPanel>
-                            <h:panelGrid columns="3" cellpadding="5">
-                                <h:outputText value="#{q.title}" />
-                                <h:outputText value="#{q.description}" />
-                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
-                                <h:outputText value="#{q.leftOptionDescription}     OR      #{q.rightOptionDescription}" />
+                        <p:outputPanel styleClass="panelGridLeft">
+                            <h:panelGrid columns="3" cellpadding="5" width="100%">
+                                <h:outputText value="#{q.title}"/>
                                 <h:outputText value="Current Votes: #{q.numberLeftVotes} - #{q.numberRightVotes}" />
+                                <p:commandButton action="#{questionController.navigateWithSelection(q.id)}" value="View Question"/>
+                                <h:outputText value="#{q.leftOptionDescription}" />
+                                <h:outputText value="#{q.rightOptionDescription}" />
                             </h:panelGrid>
                         </p:outputPanel>
                     </h:panelGrid>
+                    <hr style="width: 100%; background-color: black;"/>
                 </p:dataScroller>
             </h:form>
 
